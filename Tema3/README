@@ -1,0 +1,15 @@
+Tararache Crina-Andreea, 324CB
+
+Task 1:
+Se da un sir de noduri si se returneaza sortarea crescatoare a acestora. Cream legaturile dintre
+noduri astfel: in functie de valoarea citita, cautam succesorul si punem in campul next adresa
+acestuia, cu conditia ca valoarea sa nu fie egala cu maximul, caz in care ne oprim. La final nu
+ne ramane decat sa punem in registrul eax adresa valorii 1.
+
+Task2_p1:
+Se calculeaza cel mai mic multiplu comun cu Algoritmul lui Euclid.
+
+Task2_p2:
+Pentru a stabili daca o expresie este corecta nu facem
+decat sa punem pe stiva daca intalnim o paranteaza deschisa si sa scoatem de pe stiva daca
+intalnim una inchisa.
