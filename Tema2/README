@@ -1,59 +1,35 @@
 Tararache Crina-Andreea, 324CB
 
 Task 1:
-In primul rand, folosim registrul ebx in care punem fiecare caracter din esi (plaintext), 
-se efectueaza xor intre caracterul din ebx si caracterul din key (luate in ordine inversa).
-Cu ajutorul registrului eax retinem pasul. Il folosim ca sa punem caracterul obtinut in edx
-(ciphertext) pe pozitia aferenta pasului; il incrementam la fiecare pas. Ca si structura 
-repetitiva folosim loop pentru ca in ecx ni se da stocata lungimea cuvintelor si atunci
-folosind loop acesta decrementeaza automat valoarea din ecx si se opreste cand ajunge
-la 0. Nu uitam sa resetam x (valoarea atribuita lui eax) pentru testele urmatoare.
+Folosim registrul ebx in care punem fiecare caracter din esi (plaintext), se efectueaza xor intre caracterul din ebx si caracterul din key (luate in ordine inversa).
+Cu ajutorul registrului eax retinem pasul. Il folosim ca sa punem caracterul obtinut in edx (ciphertext) pe pozitia aferenta pasului; il incrementam la fiecare pas. 
+Ca si structura repetitiva folosim loop pentru ca in ecx se da stocata lungimea cuvintelor si atunci folosind loop acesta decrementeaza automat valoarea din ecx si se 
+opreste cand ajunge la 0. Nu uitam sa resetam x (valoarea atribuita lui eax) pentru testele urmatoare.
 
 Task 2:
-Ca sa calculez varsta unui coleg am ales sa scad din anul curent, anul nasterii si sa pun 
-rezultatul direct in ecx (dates), folosind ca la punctul anterior tot eax pentru  a insera
-pe pozitia corecta. Singura problema cu metoda asta este ca s-ar putea ca ziua 
-aniversara sa nu fi venit inca asa ca urmatorul pas a fost sa obtin lunile si sa le compar: 
-daca luna curenta este mai mare decat luna nasterii nu facem nicio modificare asupra 
-varstei; daca luna curenta este mai mica decat luna nasterii, scadem 1 din varsta pentru 
-ca ziua colegului inca nu a fost. Daca lunile sunt egale, mergem in label-ul equal si facem
-acelasi lucru pentru zile: daca ziua curenta este mai mare sau egala cu cea a nasterii, 
-lasam asa; daca nu, se duce in less si se scade 1. Ultimul pas este verify unde se verifica
-daca vreo varsta e negativa (se poate intampla acest lucru daca ziua nasterii este dupa
-data curenta sau daca colegul e nascut in acelasi an ca si anul curent, cazuri in care varsta 
-scrisa in ecx este 0, se ajunge in less, deci varsta ajunge sa fie -1 asa ca daca se intampla
-acest lucru mergem in add si adaugam 1 la varsta finala. Se repeta altgoritmul pana 
-cand valoare din edx ajunge la 0.
+Ca sa calculez varsta unui coleg am ales sa scad din anul curent, anul nasterii si sa pun rezultatul direct in ecx (dates), folosind ca la punctul anterior tot eax 
+pentru  a insera pe pozitia corecta. Singura problema cu metoda asta este ca s-ar putea ca ziua aniversara sa nu fi venit inca asa ca urmatorul pas a fost sa obtin 
+lunile si sa le compar: daca luna curenta este mai mare decat luna nasterii nu facem nicio modificare asupra varstei; daca luna curenta este mai mica decat luna 
+nasterii, scadem 1 din varsta pentru ca ziua colegului inca nu a fost. Daca lunile sunt egale, mergem in label-ul equal si facem acelasi lucru pentru zile: daca ziua 
+curenta este mai mare sau egala cu cea a nasterii, lasam asa; daca nu, se duce in less si se scade 1. Ultimul pas este verify unde se verifica daca vreo varsta e 
+negativa (se poate intampla acest lucru daca ziua nasterii este dupa data curenta sau daca colegul e nascut in acelasi an ca si anul curent, cazuri in care varsta 
+scrisa in ecx este 0, se ajunge in less, deci varsta ajunge sa fie -1 asa ca daca se intampla acest lucru mergem in add si adaugam 1 la varsta finala. Se repeta 
+algoritmul pana cand valoare din edx ajunge la 0.
 
 Task 3:
-In primul rand declaram cateva (mai multe) variabile pentru ca registrele nu mi-au fost 
-sub nicio forma de ajuns (nu este intr-adevar un altgoritm  foarte eficient). Inainte de
-toate punem in 2 variabile lungimea cheii pentru ca o sa folosim de cateva ori.  Primul
-pas este sa calculam catul si restul impartirii lungimii cuvantului la lungimea cheii (catul
-plus 1 reprezinta pe cate linii o sa se intinda cuvantul dat si restul reprezinta cate pozitii
-de pe ultima linie sunt ocupate). Facem acest lucru cu idiv si o sa avem in eax catul si in 
-edx restul (asa functioneaza idiv) pe care le punem in x si y pentru a putea folosi mai 
-departe registrele. Urmatorul pas este sa vedem ce indice citim din vectorul edi. Daca
-este 0 trecem direct la inserat caractere in ebx pentru ca ne aflam deja la primul caracter
-de adaugat. Daca nu este 0, mergem in l1 care o sa incrementeze eax de un numar de ori 
-egal cu indicele coaloanei citite. In momentul asta oricare ar fi indicele citit, ne aflam cu 
-contorul la primul caracter ce trebuie adaugat in ebx dar mai trebuie pusa o conditie:
-trebuie sa stim cand ne oprim de adaugat caractere, adica trebuie sa stim daca pe ultima
-linie se gaseste caracter sau nu. Pentru asta comparam indicele coloanei cu restul 
-impartirii de mai sus (ex: pentru primul caz obtinem catul 4 si restul 4 deci singura 
-coloana care nu are caracter pe ultima linie este cea cu indicele 4, adica a cincea; daca
-restul era 2 toate coloanele cu indici egali sau mai mari ca 2 nu aveau caractere si tot 
-asa). In functie de asta se apeleaza doua label-uri identice, singura diferenta fiind ca 
-una face x pasi (catul impartirii plus 1) , si cealalta x-1 pasi. O sa explic pe scurt doar una,
-ele fiind acelasi lucru: prima data se adauga pur si simplu in ebx primul caracter din eax,
-se intra pe count_len_key_chars/pass_len_key_chars care sare peste atatea caractere 
-din eax egale cu lungimea cheii dupa care se adauga iar caracterul in ebx, se reseteaza t
-care retine lungimea cheii si se verifica daca se reia procedul sau nu (se repeta de x/x-1 ori)
-Nu ultimul rand, in variabila j e esential sa retinem ecx (pozitia pe care trebuie sa adaugam
-in ebx la pasul urmator); observam ca de fiecare data inainte sa adaugam in ebx ii dam
-lui ecx valoarea din j pentru a insera exact in continuarea caracterelor din ebx. Alt aspect
-important, retinem la inceput de tot in variabila z pozitia pe care ne aflam in vectorul 
-din care citim indicii coloanei deci tot asa, inainte sa verificam daca mai avem coloane
-trebuie sa punem in ecx valoarea din z. Un ultim lucru ar fi ca j este singura variabila ce
-trebuie reinitializata pentru testul urmator, ea reprezentand pozitia pe care inseram in
-ebx (ciphertext).
+In primul rand declaram cateva variabile pentru ca registrele nu ne sunt suficiente. Inainte de toate, punem in 2 variabile lungimea cheii. Primul pas este sa calculam
+catul si restul impartirii lungimii cuvantului la lungimea cheii (catul plus 1 reprezinta pe cate linii o sa se intinda cuvantul dat si restul reprezinta cate pozitii
+de pe ultima linie sunt ocupate). Facem acest lucru cu idiv si o sa avem in eax catul si in edx restul pe care le punem in x si y pentru a putea folosi mai departe 
+registrele. Urmatorul pas este sa vedem ce indice citim din vectorul edi. Daca este 0 trecem direct la inserat caractere in ebx pentru ca ne aflam deja la primul 
+caracter de adaugat. Daca nu este 0, mergem in l1 care o sa incrementeze eax de un numar de ori egal cu indicele coaloanei citite. In momentul asta oricare ar fi 
+indicele citit, ne aflam cu contorul la primul caracter ce trebuie adaugat in ebx dar mai trebuie pusa o conditie: trebuie sa stim cand ne oprim de adaugat caractere, 
+adica trebuie sa stim daca pe ultima linie se gaseste caracter sau nu. Pentru asta comparam indicele coloanei cu restul impartirii de mai sus (ex: pentru primul caz 
+obtinem catul 4 si restul 4 deci singura coloana care nu are caracter pe ultima linie este cea cu indicele 4, adica a cincea; daca restul era 2 toate coloanele cu 
+indici egali sau mai mari ca 2 nu aveau caractere si tot asa). In functie de asta se apeleaza doua label-uri identice, singura diferenta fiind ca una face x pasi 
+(catul impartirii plus 1) , si cealalta x-1 pasi. O sa explic pe scurt: prima data se adauga pur si simplu in ebx primul caracter din eax, se intra pe 
+count_len_key_chars/pass_len_key_chars care sare peste atatea caractere din eax egale cu lungimea cheii, dupa care se adauga iar caracterul in ebx, se reseteaza t care
+retine lungimea cheii si se verifica daca se reia procesul sau nu (se repeta de x/x-1 ori). Nu ultimul rand, in variabila j e esential sa retinem ecx (pozitia pe care 
+trebuie sa adaugam in ebx la pasul urmator); observam ca de fiecare data inainte sa adaugam in ebx ii dam lui ecx valoarea din j pentru a insera exact in continuarea 
+caracterelor din ebx. Alt aspect important, retinem la inceput de tot in variabila z pozitia pe care ne aflam in vectorul din care citim indicii coloanei deci tot asa,
+inainte sa verificam daca mai avem coloane trebuie sa punem in ecx valoarea din z. Un ultim lucru ar fi ca j este singura variabila ce trebuie reinitializata pentru 
+testul urmator, ea reprezentand pozitia pe care inseram in ebx (ciphertext).
