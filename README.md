@@ -1,2 +1,2 @@
 # IOCLA
-Introducere in organizarea calculatorului si limbaje de asamblare, Facultatea de Automatica si Calculatoare, UPB
+Introducere in organizarea calculatorului si limbaje de asamblare, Facultatea de Automatica si Calculatoare, UPB, 2021
