@@ -1,51 +1,62 @@
-Tararache Crina-Andreea, grupa 324CB
+Tararache Crina-Andreea, 324CB
 
-main():
+- main():
 In primul rand am declarat directorul parinte caruia i-am atribuit numele "home" si parintele NULL.
-Observatie: Campurile de tip char din cadrul structurilor sunt alocate dinamic si verificate (nu sunt si eliberate, din pacate, pentru ca nu mi-a iesit partea cu memory check-ul).
-Pentru a citi din fisier am folosit functia "fgets", cititand fiecare linie din fisierul input si segmentand-o cu ajutorul functiei "strtok".
-In functie de primul cuvant de pe fiecare linie, se apeleaza functia corespunzatoare cu parametrii corespunzatori.
+Observatie: Campurile de tip char din cadrul structurilor sunt alocate dinamic si verificate.
+Pentru a citi din fisier am folosit functia "fgets", cititand fiecare linie din fisierul input si segmentand-o cu ajutorul functiei "strtok". In functie de primul 
+cuvant de pe fiecare linie, se apeleaza functia corespunzatoare cu parametrii corespunzatori.
 Observatie: Trebuie sters caracterul "\n" de la finalul fiecarei linii.
 
-touch():
-Mai intai se verifica daca mai sunt fisiere in directorul in care vrem sa cream pentru a sti daca atribuim inceputul de lista de fisiere acelui fisier sau nu. 
-Daca este primul, completam campurile si setam pointerul listei de fisiere (parent->head_children_files = file) pentru a sti caeste inceputul de lista de fisiere.
-Daca mai exista alte fisiere in directorul dat, verificam daca deja exista unul cu numele dat. In cazul in care nu exista, contorul a ramas la valoarea 0, iar cursorul se afla la finalul listei, deci inseram pur si simplu la final.
+- touch():
+Mai intai se verifica daca mai sunt fisiere in directorul in care vrem sa cream pentru a sti daca atribuim inceputul de lista de fisiere acelui fisier. Daca este 
+primul, completam campurile si setam pointerul listei de fisiere (parent->head_children_files = file) pentru a sti ca este inceputul de lista de fisiere. Daca mai 
+exista alte fisiere in directorul dat, verificam daca deja exista unul cu numele dat. In cazul in care nu exista, contorul a ramas la valoarea 0, iar cursorul se afla 
+la finalul listei, deci inseram pur si simplu la final.
 
-mkdir():
-Identic ca si la functia touch(), primul pas este de a verifica daca mai exista directoare in directorul dat pentru a seta inceputul de lista.
-Daca nu mai exista, cream celula, ii completam campurile si setam pointerul catre directorul creat (parent->head_children_dirs = director).
-Daca mai sunt si alte directoare, verificam daca numele este disponibil. Daca da, inseram la final de lista, identic ca la functia precedenta.
+- mkdir():
+Ca si la functia touch(), primul pas este de a verifica daca mai exista directoare in directorul dat pentru a seta inceputul de lista. Daca nu mai exista, cream celula,
+ii completam campurile si setam pointerul catre directorul creat (parent->head_children_dirs = director). Daca mai sunt si alte directoare, verificam daca numele este 
+disponibil. Daca da, inseram la final de lista ca la functia precedenta.
 
-ls():
-In primul rand, daca directorul dat este gol (parent->head_children_files == NULL si parent->head_children_dirs == NULL) functia nu face nimic (return).
-Daca directorul nu este gol, mai intai parcurgem lista de directoate pana la final si le afisam. Ulterior facem acelasi lucru si cu fisierele.
+- ls():
+In primul rand, daca directorul dat este gol (parent->head_children_files == NULL si parent->head_children_dirs == NULL) functia nu face nimic (return). Daca directorul
+nu este gol, mai intai parcurgem lista de directoate pana la final si le afisam. Ulterior facem acelasi lucru si cu fisierele.
 
-rm():
-Daca nu exista niciun fisiere in directorul dat, afisam mesajul corespunzator si dam return.
-Altfel, trebuie sa verificam daca fisiserul cautat este primul pentru a modifica inceputul de lista (parent->head_children_files = aux->next). Daca este orice alt fisier, stergem pur si simplu.
-In cazul in care contorul ramane la valoarea 0 inseamna ca nu s-a gasit niciun fisier cu numele dat, deci afisam mesajul corespunzator si dam return.
+- rm():
+Daca nu exista niciun fisier in directorul dat, afisam mesajul corespunzator si dam return. Altfel, trebuie sa verificam daca fisierul cautat este primul pentru a 
+modifica inceputul de lista (parent->head_children_files = aux->next). Daca este orice alt fisier, stergem pur si simplu. In cazul in care contorul ramane la valoarea 0
+inseamna ca nu s-a gasit niciun fisier cu numele dat, deci afisam mesajul corespunzator si dam return.
 
-rmdir():
+- rmdir():
 Idem functiei rm().
 
-cd():
-In primul rand luam cazul cel mai simplu, si anume "cd ..". In acest caz, daca parintele directorului dat este NULL ((*parent)->parent == NULL) atunci nu se va face nicio operatiune. Daca acesta nu este NULL, schimbam pointerul catre parintele directorului dat (*parent = (*parent)->parent), deplasandu-ne inapoi in ierarhia de fisiere.
-In al doilea rand, parcurgem lista de directoare si vedem daca directorul data exista. Daca da, ne mutam ca mai sus, daca nu, afisam mesajul corespunzator.
+- cd():
+In primul rand luam cazul cel mai simplu, si anume "cd ..". In acest caz, daca parintele directorului dat este NULL ((*parent)->parent == NULL) atunci nu se va face 
+nicio operatiune. Daca acesta nu este NULL, schimbam pointerul catre parintele directorului dat (*parent = (*parent)->parent), deplasandu-ne inapoi in ierarhia de 
+fisiere. In al doilea rand, parcurgem lista de directoare si vedem daca directorul dat exista. Daca da, ne mutam ca mai sus, daca nu, afisam mesajul corespunzator.
 
-pwd():
-Aceasta este o functie recursiva care functioneaza astfel: atata timp cat directorul dat are un parinte, apelam functia pwd pentru acel director parinte. In momentul in care s-a ajuns la home (target->parent == NULL) se afiseaza secventa "/home", secventa care ii este atribuita lui "aux". In momentul in care aux devine diferit de NULL, se tot adauga la el caracterul "/" si numele directorului pana cand se ajunge inapoi la directorul dat. In final se afiseaza variabila aux care o sa reprezinte calea efectiva a directorului dat.
+- pwd():
+Aceasta este o functie recursiva care functioneaza astfel: atata timp cat directorul dat are un parinte, apelam functia pwd pentru acel director parinte. In momentul 
+in care s-a ajuns la home (target->parent == NULL) se afiseaza secventa "/home", secventa care ii este atribuita lui "aux". In momentul in care aux devine diferit de 
+NULL, se tot adauga la el caracterul "/" si numele directorului pana cand se ajunge inapoi la directorul dat. In final se afiseaza variabila aux care o sa reprezinte 
+calea directorului dat.
 
-stop():
-Ca sa fiu sincera, am gasit "exist(0)" pe internet si opreste executarea, deci e ok.
+- stop():
+exist(0) opreste executarea.
 
-tree():
-Si aceasta este o functie recursiva: se apeleaza tree atata timp cat directorul dat are campul next diferit de NULL (adica atata timp cat contine un alt fisier/director). Initial se apeleaza functia pentru level=0, fiind vorba de directorul cel mai stanga. For-ul ce itereaza de la 0 la level are rolul de stabili de cate taburi este nevoie pentru a obtine afisarea ierarhica.
+- tree():
+Este o functie recursiva: se apeleaza tree atata timp cat directorul dat are campul next diferit de NULL (adica atata timp cat contine un alt fisier/director). 
+Initial se apeleaza functia pentru level = 0, fiind vorba de directorul cel mai stanga. For-ul ce itereaza de la 0 la level are rolul de stabili de cate taburi este 
+nevoie pentru a obtine afisarea ierarhica.
 
-mv():
-Mai intai de toate se verifica daca exista un fisier/director cu numele oldname si, dupa aceea, daca numelenewname este disponibil atat pentru fisiere, cat si pentru directoare. Altfel, se afiseaza mesajele corespunzatoare.
-Daca s-a gasit fisier cu numele oldname si numele newname este disponibil, verificam daca fisierul ce trebuie redenumit este primul in lista de fisiere pentru a sti daca modificam inceputul listei sau nu. Daca este primul, mutam pointerul catre fisierul urmator (parent->head_children_files = parent->head_children_files->next) si cream fisierul din nou apeland touch(parent, newname), functie care il adauga la final. Daca se gaseste fisierul cautat si nu este primul, il stergem din lista (aux->next = aux->next->next) si il readaugam cu numele nou folosind touch.
-Se procedeaza identic si in cazul directoarele doar ca aici trebui verificat daca directorul dat este gol sau nu. Daca este gol, atunci putem spune ca il tratam ca pe un fisier: il stergem si il readaugam la final. Daca directorul insa nu este gol, trebuie sa retinem pointerii saii catre fisierele si directoarele pe care le contine.
+- mv():
+Mai intai se verifica daca exista un fisier/director cu numele oldname si, dupa aceea, daca numele newname este disponibil atat pentru fisiere, cat si pentru 
+directoare. Altfel, se afiseaza mesajele corespunzatoare. Daca s-a gasit fisier cu numele oldname si numele newname este disponibil, verificam daca fisierul ce trebuie
+redenumit este primul in lista de fisiere pentru a sti daca modificam inceputul listei sau nu. Daca este primul, mutam pointerul catre fisierul urmator 
+(parent->head_children_files = parent->head_children_files->next) si cream fisierul din nou apeland touch(parent, newname), functie care il adauga la final. Daca se 
+gaseste fisierul cautat si nu este primul, il stergem din lista (aux->next = aux->next->next) si il readaugam cu numele nou folosind touch. Se procedeaza identic si 
+in cazul directoarele doar ca aici trebuie verificat daca directorul dat este gol sau nu. Daca este gol, atunci putem spune ca il tratam ca pe un fisier: il stergem si
+il readaugam la final. Daca directorul insa nu este gol, trebuie sa retinem pointerii catre fisierele si directoarele pe care le contine.
 
 
 
