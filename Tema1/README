@@ -57,8 +57,3 @@ redenumit este primul in lista de fisiere pentru a sti daca modificam inceputul 
 gaseste fisierul cautat si nu este primul, il stergem din lista (aux->next = aux->next->next) si il readaugam cu numele nou folosind touch. Se procedeaza identic si 
 in cazul directoarele doar ca aici trebuie verificat daca directorul dat este gol sau nu. Daca este gol, atunci putem spune ca il tratam ca pe un fisier: il stergem si
 il readaugam la final. Daca directorul insa nu este gol, trebuie sa retinem pointerii catre fisierele si directoarele pe care le contine.
-
-
-
-
-
